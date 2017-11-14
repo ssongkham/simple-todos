@@ -7,20 +7,65 @@
         <input type="checkbox" />
         Hide Completed Tasks
       </label>
-
-      {{> loginButtons}}
-
+	<div>{{> Template.dynamic template=currentPage}}</div>
+      
       {{#if currentUser}}
+      <div><br>
+        <select id="userdd" name="userdd" class="float-left">
+        <option value="">Select User</option>
+        {{#each users}} 
+            <option value="{{_id}}">{{profile.firstname}} {{profile.lastname}}</option>
+        {{/each}}
+        </select>
+        <button type="button" id="mapbtn" class="hide margin-left5">View Map</button>
+        </div>
         <form class="new-task">
           <input type="text" name="text" placeholder="Type to add new tasks" />
         </form>
       {{/if}}
     </header>
-
+	
     <ul>
       {{#each tasks}}
         {{> task}}
       {{/each}}
     </ul>
+    
+  </div>
+  <div id="map-container" class="map-container" align="center">
+  {{> googleMap name="userMap" options=userMapOptions}}
   </div>
 </body>
+
+<template name="register">
+    <div style="width:200px;">
+    <h2>Register</h2>
+    <form class="register">
+        <p>First Nme<br><input type="text" id="firstname" name="firstname" required></p>
+        <p>Last Name<br> <input type="text" id="lastname" name="lastname" required></p>
+        <p>Mailing Address<br> <input type="text" name="address" id="address" class="autocomplete" required></p>
+        <p>Email<br> <input type="email" id="email" name="email" required></p>
+        <p>User Name<br> <input type="text" id="username" name="username" required></p>
+        <p>Password<br> <input type="password" id="password" name="password" required></p>
+        <p><button type="submit">Register</button> <button type="button" class="clickChangesPage" data-page='nav' >Cancel</button></p> 
+    </form>
+    </div>
+</template>
+<template name="nav">
+    {{#if currentUser}}
+    Hi {{firstname}}
+     <button class="logout" data-page='logout'>Logout</button>
+    {{else}}
+    <button class="clickChangesPage" data-page='login'>Sign In</button>
+    {{/if}}
+</template>
+<template name="login">
+    <h2>Login</h2>
+    <form class="login">
+    <div style="width:200px;">
+        <p align="center">Email<br> <input type="email" id="loginemail" name="loginemail" required></p>
+        <p align="center">Password<br><input type="password" id="loginpassword" name="loginpassword" required></p>
+        <p align="center"><button type="submit">Login</button> <button type="button" class="clickChangesPage" data-page='register'>Register</button></p>
+        </div>
+    </form>
+</template>
